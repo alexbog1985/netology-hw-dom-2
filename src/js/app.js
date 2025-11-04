@@ -1,11 +1,22 @@
-// TODO: write code here
+import { films } from "./data";
+import Films from "./films/Films";
 
-// comment this to pass build
-const unusedVariable = "variable";
+addEventListener("DOMContentLoaded", () => {
+  const filmsEl = new Films(document.querySelector(".films"));
 
-// for demonstration purpose only
-export default function demo(value) {
-  return `Demo: ${value}`;
-}
+  films.forEach((film) => {
+    filmsEl.addFilm(film.id, film.title, film.imdb, film.year);
+  });
 
-console.log("app.js included");
+  const sortByArray = ["id", "title", "imdb", "year"];
+
+  let currentIndex = 0;
+  let reverse = false;
+
+  setInterval(() => {
+    filmsEl.sortFilms(sortByArray[currentIndex], reverse);
+    console.log(`sort by: ${sortByArray[currentIndex]} reversed: ${reverse}`);
+    currentIndex = (currentIndex + 1) % sortByArray.length;
+    if (currentIndex === 0) reverse = !reverse;
+  }, 2000);
+});
